@@ -1,0 +1,29 @@
+{
+  "name": "barlink-api-menu",
+  "version": "1.0.0",
+  "description": "Menu restaurant api",
+  "main": "server.js",
+  "scripts": {
+    "lint": "standard",
+    "dev": "DEBUG=apirestaurant:* nodemon server.js",
+    "start": "NODE_ENV=production node server.js"
+  },
+  "author": "Danilo Lema",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "chalk": "^2.1.0",
+    "express": "^4.15.4",
+    "express-asyncify": "^1.0.0",
+    "express-jwt": "^5.3.0",
+    "express-jwt-permissions": "^1.0.0",
+    "helmet": "^3.8.2",
+    "jsonwebtoken": "^8.0.1",
+    "mongoose": "^4.11.13"
+  },
+  "devDependencies": {
+    "debug": "^3.1.0",
+    "nodemon": "^1.12.1",
+    "standard": "^10.0.3"
+  }
+}
