@@ -1,20 +1,21 @@
 'use strict'
 
-const debug = require('debug')('apirestaurant:api')
+const debug = require('debug')('restaurant:api')
+const chalk = require('chalk')
 const http = require('http')
 const express = require('express')
 const asyncify = require('express-asyncify')
 const mongoose = require('mongoose')
 const helmet = require('helmet')
 
-const errors = require('./utils/errors')
-const api = require('./api')
+const errors = require('./handlers/errors')
+const config = require('./config')
+const api = require('./routers')
 
-const port = process.env.PORT || 3000
 const app = asyncify(express())
 const server = http.createServer(app)
 
-mongoose.Promise = Promise
+mongoose.Promise = global.Promise
 
 // help protect your app from some well-known web vulnerabilities by setting HTTP headers appropriately
 app.use(helmet())
@@ -23,28 +24,31 @@ app.use(helmet())
 app.use('/api', api)
 app.use(errors.handleExpressError)
 
-// Start server if we're not someone else's dependency
 // https://stackoverflow.com/questions/20769790/use-of-module-parent-in-nodejs
 if (!module.parent) {
-  // Connect to database
-  mongoose.connect(process.env.MONGO_URL, { useMongoClient: true }, () => {
-    debug('Mongoose default connection open')
-    // Run Express server
-    server.listen(port, () => {
-      debug(`server running on port ${port}`)
-    })
-  })
+  // Connect to database and then to the Node API Server
+  try {
+    mongoose.connect(config.db, { useMongoClient: true })
+    debug(`Trying to connect to DB ${config.db}`)
+  } catch (err) {
+    debug(`${chalk.red('[error]')} Server initialization failed ${err.message}`)
+    console.error(err.stack)
+  }
 }
 
+// Listeners
 process.on('uncaughtException', errors.handleFatalError)
 process.on('unhandledRejection', errors.handleFatalError)
-process.on('SIGINT', () => {
-  mongoose.connection.close(() => {
-    debug('Mongoose default connection disconnected through app termination')
-    process.exit(0)
-  })
-})
+process.on('SIGINT', errors.handleGracefulExit)
+
+mongoose.connection.on('connected', launchServer)
+mongoose.connection.on('disconnected', errors.handleDisconnectedExit)
 mongoose.connection.on('error', errors.handleDBError)
-mongoose.connection.on('disconnected', () => {
-  debug('Mongoose default connection disconnected')
-})
+
+// Handlers
+function launchServer () {
+  debug(`Connected to ${config.database} Database`)
+  server.listen(config.port, () => {
+    debug(`server running on port ${config.port}`)
+  })
+}
