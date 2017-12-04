@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "lint": "standard",
-    "dev": "DEBUG=barlink-api-menu:* nodemon server.js",
+    "dev": "DEBUG=barlink-api:* nodemon server.js",
     "start": "NODE_ENV=production node server.js"
   },
   "author": "Danilo Lema",
