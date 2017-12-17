@@ -4,15 +4,24 @@ const {
   NotAuthorizedError,
   NotAdminError
 } = require('../handlers/custom-errors')
+const services = require('../services/auth')
 
-// Check if the user is authorized by token
-function isAuthorized (req, res, next) {
-  if (!req.user || !req.user.username) {
-    return next(new NotAuthorizedError())
+function isAuth (req, res, next) {
+  if (!req.headers.authorization) {
+    return res.status(403).send({ message: 'No tienes autorización' })
   }
-  next()
-}
 
+  const token = req.headers.authorization.split(' ')[1]
+
+  services.decodeToken(token)
+    .then(response => {
+      req.user = response
+      next()
+    })
+    .catch(response => {
+      res.status(response.status)
+    })
+}
 // Check if the user is admin through token authorization
 function isAdmin (req, res, next) {
   if (!req.user.admin) {
@@ -22,6 +31,6 @@ function isAdmin (req, res, next) {
 }
 
 module.exports = {
-  isAuthorized,
+  isAuth,
   isAdmin
 }

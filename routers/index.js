@@ -6,8 +6,8 @@ const guard = require('express-jwt-permissions')()
 const bodyParser = require('body-parser')
 const asyncify = require('express-asyncify')
 
-const movies = require('../controllers/movies')
 const userCtrl = require('../controllers/user')
+const expenseCtrl = require('../controllers/expense')
 
 const config = require('../config')
 const api = asyncify(express.Router())
@@ -23,9 +23,9 @@ api.use(bodyParser.json())
 api.post('/signup', userCtrl.register)
 api.post('/signin', userCtrl.signIn)
 
-api.get('/movies', jwt(config.auth), movies.fetchAll)
-api.get('/movie/:id', jwt(config.auth), movies.fetchById)
-api.post('/movie', jwt(config.auth), guard.check(['movies:write']), movies.save)
-api.delete('/movie/:id', jwt(config.auth), movies.remove)
+/*api.get('/movies', jwt(config.auth), movies.fetchAll)
+api.get('/movie/:id', jwt(config.auth), movies.fetchById)*/
+api.post('/expense', expenseCtrl.create)
+//api.delete('/movie/:id', jwt(config.auth), movies.remove)
 
 module.exports = api

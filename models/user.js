@@ -40,7 +40,7 @@ const userSchema = new Schema({
 })
 
 userSchema.methods.comparePassword = function(pwd) {
-  return bcrypt.compareSync(pwd, secretpwd)
+  return bcrypt.compareSync(pwd, this.secretpwd)
 }
 
 module.exports = mongoose.model('User', userSchema)
