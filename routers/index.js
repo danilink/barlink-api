@@ -26,6 +26,8 @@ api.post('/signin', userCtrl.signIn)
 /*api.get('/movies', jwt(config.auth), movies.fetchAll)
 api.get('/movie/:id', jwt(config.auth), movies.fetchById)*/
 api.post('/expense', expenseCtrl.create)
+api.get('/expense/:id', expenseCtrl.detail)
+api.get('/expense', expenseCtrl.fetchAll)
 //api.delete('/movie/:id', jwt(config.auth), movies.remove)
 
 module.exports = api

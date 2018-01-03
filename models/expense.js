@@ -17,8 +17,10 @@ const expenseSchema = new Schema({
     required: true
   },
   user: {
-    type: Schema.ObjectId,
-    ref: 'userSchema'
+    //type: Schema.ObjectId,
+    //ref: 'userSchema'
+    type: String,
+    required: true
   }
 })
 
