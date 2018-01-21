@@ -2,6 +2,7 @@
 
 const User = require('../models/user')
 const service = require('../services/auth')
+const bcrypt = require('bcrypt')
 
 async function register(req, res) {
   const newUser = new User(req.body);
