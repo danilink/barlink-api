@@ -21,10 +21,10 @@
     "helmet": "^3.8.2",
     "jsonwebtoken": "^8.0.1",
     "jwt-simple": "^0.5.1",
-    "mongoose": "^4.11.13"
+    "mongoose": "^4.11.13",
+    "debug": "^3.1.0"
   },
   "devDependencies": {
-    "debug": "^3.1.0",
     "nodemon": "^1.12.1",
     "standard": "^10.0.3"
   }
