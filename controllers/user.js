@@ -15,7 +15,7 @@ async function register(req, res) {
   });
 };
 
-function signIn (req, res) {
+function login (req, res) {
   console.log(req.body);
   User.findOne({ email: req.body.email }, (err, user) => {
     if (err) return res.status(500).send({ message: err })

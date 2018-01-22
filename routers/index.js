@@ -20,8 +20,8 @@ api.use(bodyParser.urlencoded({ extended: false }))
 api.use(bodyParser.json())
 
 // API Routes
-api.post('/signup', userCtrl.register)
-api.post('/signin', userCtrl.signIn)
+api.post('/signin', userCtrl.register)
+api.post('/login', userCtrl.login)
 
 /*api.get('/movies', jwt(config.auth), movies.fetchAll)
 api.get('/movie/:id', jwt(config.auth), movies.fetchById)*/
