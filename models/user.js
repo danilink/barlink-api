@@ -20,7 +20,8 @@ const userSchema = new Schema({
     trim: true,
     unique: true,
     lowercase: true,
-    required: true
+    required: true,
+    match: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
   },
   secretpwd: {
     type: String,
