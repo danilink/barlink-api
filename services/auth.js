@@ -1,37 +1,35 @@
 'use strict'
 
-const jwt = require('jwt-simple')
+//const jwt = require('jwt-simple')
+var jwt = require('jsonwebtoken');
 const moment = require('moment')
 const config = require('../config')
 
-function createToken (user) {
+async function createToken (user) {
+
   const payload = {
     sub: user._id,
     iat: moment().unix(),
     exp: moment().add(14, 'days').unix()
   }
-  return jwt.encode(payload, config.auth.secret)
+
+  let token = ''
+  try {
+    token = await jwt.sign(payload, config.auth.secret)
+  } catch (e) {
+    return next(e)
+  }
+
+  return token
 }
 
-function decodeToken (token) {
-  const decoded = new Promise((resolve, reject) => {
-    try {
-      const payload = jwt.decode(token, config.auth.secret)
+async function decodeToken (token) {
 
-      if (payload.exp <= moment().unix()) {
-        reject({
-          status: 401,
-          message: 'El token ha expirado'
-        })
-      }
-      resolve(payload.sub)
-    } catch (err) {
-      reject({
-        status: 500,
-        message: 'Invalid Token'
-      })
+  try {
+      decoded = await jwt.verify(token, secret)
+    } catch (e) {
+      return next(e)
     }
-  })
 
   return decoded
 }

@@ -10,7 +10,7 @@ async function create(req, res) {
   let expense = new Expense()
   expense.price = req.body.price
   expense.date  = new Date(req.body.date)
-  expense.user  = req.body.user
+  expense._user  = req.user
   expense.description = req.body.description
 
   expense.save((err, expenseStored) => {

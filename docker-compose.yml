@@ -16,7 +16,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - MONGO_URL=mongodb://db/restaurant
+      - MONGOLAB_URI=mongodb://db/restaurant
 
 volumes:
   db-data:

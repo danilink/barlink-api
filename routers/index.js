@@ -8,6 +8,7 @@ const bodyParser = require('body-parser')
 
 const userCtrl = require('../controllers/user')
 const expenseCtrl = require('../controllers/expense')
+const incomeCtrl = require('../controllers/income')
 
 const config = require('../config')
 const api = asyncify(express.Router())
@@ -45,6 +46,8 @@ api.get('/movie/:id', jwt(config.auth), movies.fetchById)*/
 api.post('/expense', jwt(config.auth), isAuth, expenseCtrl.create)
 api.get('/expense/:id', expenseCtrl.detail)
 api.get('/expenses', expenseCtrl.fetchAll)
+
+api.post('/income', jwt(config.auth), isAuth, incomeCtrl.create)
 //api.delete('/movie/:id', jwt(config.auth), movies.remove)
 
 module.exports = api
