@@ -5,7 +5,7 @@ var jwt = require('jsonwebtoken');
 const moment = require('moment')
 const config = require('../config')
 
-async function createToken (user) {
+function createToken (user) {
 
   const payload = {
     sub: user._id,
@@ -15,7 +15,7 @@ async function createToken (user) {
 
   let token = ''
   try {
-    token = await jwt.sign(payload, config.auth.secret)
+    token = jwt.sign(payload, config.auth.secret)
   } catch (e) {
     return next(e)
   }
