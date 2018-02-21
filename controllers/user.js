@@ -7,26 +7,33 @@ const bcrypt = require('bcrypt')
 async function register(req, res) {
   const newUser = new User(req.body);
   newUser.secretpwd = bcrypt.hashSync(req.body.password, 10);
-  newUser.save((err) => {
-    if (err) {
-      return res.status(500).send({message: `Error al crear el usuario ${err}`});
-    }
-    return res.status(200).send({token: service.createToken(newUser)})
-  });
-};
+  try {
+    let user = await User.create(newUser)
+    return res.status(200).send({token: service.createToken(user)})
 
-function login (req, res) {
+  } catch (error) {
+    return res.status(500).send({message: `Error al crear el usuario ${err}`});
+  }
+}
+
+async function login (req, res) {
   console.log(req.body);
-  User.findOne({ email: req.body.email }, (err, user) => {
-    if (err) return res.status(500).send({ message: err })
+  try {
+    let user = await User.findOne({ email: req.body.email })
+
     if (!user) return res.status(404).send({ message: 'No existe el usuario' })
     if (!user.comparePassword(req.body.password)) return res.status(401).send({ message: 'Credenciales incorrectas' })
+
     req.user = user
     res.status(200).send({
-      message: 'Usuario logado correctamente',
-      token: service.createToken(user)
-    })
-  })
+        message: 'Usuario logado correctamente',
+        token: await service.createToken(user)
+      })
+
+  } catch (error) {
+    return res.status(500).send({ message: err })
+  }
+  
 }
 
 module.exports = {

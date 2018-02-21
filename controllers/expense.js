@@ -2,6 +2,7 @@
 
 const Expense = require('../models/expense')
 const moment = require('moment')
+const User = require('../models/user')
 
 async function create(req, res) {
   console.log('POST /api/expense')
@@ -10,19 +11,19 @@ async function create(req, res) {
   let expense = new Expense()
   expense.price = req.body.price
   expense.date  = new Date(req.body.date)
-  expense._user  = req.user
+  expense._user  = new User({_id:'5a3653356b556603d5f45'})
   expense.description = req.body.description
 
   expense.save((err, expenseStored) => {
-    if (err) res.status(500).send({message: `Error al salvar en la base de datos: ${err} `})
+    if (err) return res.status(500).send({message: `Error al salvar en la base de datos: ${err} `})
 
     res.status(200).send({ expense: expenseStored })
   })
 };
 
-function fetchAll (req, res) {
+async function fetchAll (req, res) {
   Expense.find({}, (err, expensesList) => {
-    if (err) res.status(500).send({message: `Error al salvar en la base de datos: ${err} `})
+    if (err) return res.status(500).send({message: `Error al salvar en la base de datos: ${err} `})
 
     res.status(200).send({ expensesList: expensesList })
   })
