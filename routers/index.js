@@ -37,6 +37,13 @@ api.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 api.use(bodyParser.json())
 
+//enabled cors
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+});
+
 // API Routes
 api.post('/signin', userCtrl.register)
 api.post('/login', userCtrl.login)
