@@ -17,6 +17,11 @@ const server = http.createServer(app)
 
 mongoose.Promise = global.Promise
 
+var swaggerUi = require('swagger-ui-express'),
+    swaggerDocument = require('./swagger.json');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 // help protect your app from some well-known web vulnerabilities by setting HTTP headers appropriately
 app.use(helmet())
 

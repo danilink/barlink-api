@@ -7,11 +7,12 @@ const User = require('../models/user')
 async function create(req, res) {
   console.log('POST /api/expense')
   console.log(req.body)
+  console.log(req.user)
 
   let expense = new Expense()
   expense.price = req.body.price
   expense.date  = new Date(req.body.date)
-  expense._user  = new User({_id:'5a3653356b556603d5f45'})
+  expense._user  = new User({_id:req.user.sub})
   expense.description = req.body.description
 
   expense.save((err, expenseStored) => {
