@@ -6,9 +6,9 @@ const express = require('express')
 const asyncify = require('express-asyncify')
 const bodyParser = require('body-parser')
 
-const userCtrl = require('../controllers/user')
-const expenseCtrl = require('../controllers/expense')
-const incomeCtrl = require('../controllers/income')
+const userCtrl = require('../controllers/userController')
+const expenseCtrl = require('../controllers/expenseController')
+const incomeCtrl = require('../controllers/incomeController')
 
 const config = require('../config')
 const api = asyncify(express.Router())
@@ -21,11 +21,11 @@ var swagger = require('swagger-node-express').createNew(subpath);
 api.use(express.static('dist'));
 
 swagger.setApiInfo({
-	    title: "example API",
-	    description: "API to do something, manage something...",
+	    title: "Barlink API",
+	    description: "API for restaurants.",
 	    termsOfServiceUrl: "",
-	    contact: "yourname@something.com",
-	    license: "",
+	    contact: "danilo.lema@hotmail.com",
+	    license: "MIT",
 	    licenseUrl: ""
 	});
 
