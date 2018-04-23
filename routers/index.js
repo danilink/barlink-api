@@ -37,6 +37,6 @@ api.get('/expenses/:id', expenseCtrl.detail)
 api.get('/expenses', expenseCtrl.fetchAll)
 
 api.post('/incomes', jwt(config.auth), isAuth, incomeCtrl.create)
-api.get('/incomes', jwt(config.auth), isAuth, incomeCtrl.fetchAll)
+api.get('/incomes', isAuth, incomeCtrl.fetchAll)
 
 module.exports = api
