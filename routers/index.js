@@ -9,6 +9,7 @@ const bodyParser = require('body-parser')
 const userCtrl = require('../controllers/userController')
 const expenseCtrl = require('../controllers/expenseController')
 const incomeCtrl = require('../controllers/incomeController')
+const foodCtrl = require('../controllers/foodController')
 
 const config = require('../config')
 const api = asyncify(express.Router())
@@ -24,7 +25,7 @@ api.use(bodyParser.json())
 //enabled cors
 api.use(function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	res.header("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin, X-Requested-With, Content-Type, Accept, Authorization");
 	next();
 });
 
@@ -38,5 +39,9 @@ api.get('/expenses', expenseCtrl.fetchAll)
 
 api.post('/incomes', jwt(config.auth), isAuth, incomeCtrl.create)
 api.get('/incomes', isAuth, incomeCtrl.fetchAll)
+
+api.post('/food', jwt(config.auth), isAuth, foodCtrl.create)
+api.get('/food/:id', foodCtrl.detail)
+api.get('/food', foodCtrl.fetchAll)
 
 module.exports = api
