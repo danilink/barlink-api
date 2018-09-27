@@ -12,7 +12,7 @@ async function register(req, res) {
     return res.status(200).send({token: service.createToken(user)})
 
   } catch (error) {
-    return res.status(500).send({message: `Error al crear el usuario ${err}`});
+    return res.status(500).send({message: `Error al crear el usuario ${error}`});
   }
 }
 
