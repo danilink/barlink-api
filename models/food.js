@@ -1,12 +1,10 @@
 const mongoose = require('mongoose')
-const uniqueValidator = require('mongoose-unique-validator');
 const Schema = mongoose.Schema
 
 const foodSchema = new Schema({
     name: {
       type: String,
-      required: true,
-      unique: true
+      required: true
     },
     category: {
         type: String,
@@ -27,5 +25,5 @@ const foodSchema = new Schema({
         default: Date.now
       },
 });
-foodSchema.plugin(uniqueValidator);
+
 module.exports = mongoose.model('Food', foodSchema)
