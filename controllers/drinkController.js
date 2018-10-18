@@ -1,43 +1,44 @@
 'use strict'
 
-const Food = require('../models/food')
+const Drink = require('../models/drink')
 const moment = require('moment')
 const User = require('../models/user')
 
 async function create(req, res) {
-  console.log('POST /api/food')
+  console.log('POST /api/drink')
   console.log(req.body)
   console.log(req.user)
 
-  let food = new Food()
-  food.name = req.body.name
-  food.price  = req.body.price
-  food._user  = new User({_id:req.user.sub})
-  food.category = req.body.category
+  let drink = new Drink()
+  drink.name = req.body.name
+  drink.price  = req.body.price
+  drink.description = req.body.description
+  drink._user  = new User({_id:req.user.sub})
+  drink.category = req.body.category
 
-  food.save((err, foodStored) => {
+  drink.save((err, drinkStored) => {
     if (err) return res.status(500).send({message: `Error al salvar en la base de datos: ${err} `})
 
-    res.status(200).send({ food: foodStored })
+    res.status(200).send({ drink: drinkStored })
   })
 };
 
 async function fetchAll (req, res) {
-  Food.find({}, (err, foodList) => {
+  Drink.find({}, (err, drinkList) => {
     if (err) return res.status(500).send({message: `Error al recuperar de la base de datos: ${err} `})
 
-    res.status(200).send({ foodList: foodList })
+    res.status(200).send({ drinkList: drinkList })
   })
 }
 
 async function detail(req, res) {
-  console.log('POST /api/food/{id}')
+  console.log('POST /api/drink/{id}')
   console.log(req.body)
-  let foodId = req.params.id
+  let drinkId = req.params.id
 
-  Food.findById(foodId, (err, foodFound) => {
+  Drink.findById(drinkId, (err, drinkFound) => {
     if (err) res.status(500).send({message: `Error al recuperar de la base de datos: ${err} `})
-    res.status(200).send({ food: foodFound })
+    res.status(200).send({ drink: drinkFound })
   })
 };
 

@@ -1,67 +1,45 @@
 {  
   "swagger":"2.0",
   "info":{  
-     "description":"This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
+     "description":"This is a barlink-api server API.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
      "version":"1.0.0",
-     "title":"Swagger Petstore",
+     "title":"Swagger Barlink-api",
      "termsOfService":"http://swagger.io/terms/",
      "contact":{  
-        "email":"apiteam@swagger.io"
+        "email":"bdanilolema@gamil.com"
      },
      "license":{  
         "name":"Apache 2.0",
         "url":"http://www.apache.org/licenses/LICENSE-2.0.html"
      }
   },
-  "host":"petstore.swagger.io",
-  "basePath":"/v2",
+  "host":"https://barlink-api.herokuapp.com",
+  "basePath":"/api",
   "tags":[  
-     {  
-        "name":"pet",
-        "description":"Everything about your Pets",
-        "externalDocs":{  
-           "description":"Find out more",
-           "url":"http://swagger.io"
-        }
-     },
-     {  
-        "name":"store",
-        "description":"Access to Petstore orders"
-     },
-     {  
-        "name":"user",
-        "description":"Operations about user",
-        "externalDocs":{  
-           "description":"Find out more about our store",
-           "url":"http://swagger.io"
-        }
-     }
   ],
   "schemes":[  
      "http"
   ],
   "paths":{  
-     "/pet":{  
+     "/api/food":{  
         "post":{  
            "tags":[  
-              "pet"
+              "food"
            ],
-           "summary":"Add a new pet to the store",
+           "summary":"Add a new food to the store",
            "description":"",
-           "operationId":"addPet",
+           "operationId":"addFood",
            "consumes":[  
-              "application/json",
-              "application/xml"
+              "application/json"
            ],
            "produces":[  
-              "application/xml",
               "application/json"
            ],
            "parameters":[  
               {  
                  "in":"body",
                  "name":"body",
-                 "description":"Pet object that needs to be added to the store",
+                 "description":"Food object that needs to be added to the store",
                  "required":true,
                  "schema":{  
                     "$ref":"#/definitions/Pet"
@@ -75,7 +53,7 @@
            },
            "security":[  
               {  
-                 "petstore_auth":[  
+                 "barlink_store_auth":[  
                     "write:pets",
                     "read:pets"
                  ]
@@ -272,7 +250,7 @@
            },
            "security":[  
               {  
-                 "api_key":[  
+                 "bearerAuth":[  
 
                  ]
               }
@@ -863,6 +841,12 @@
         "type":"apiKey",
         "name":"api_key",
         "in":"header"
+     },
+     "bearerAuth":{  
+      "description": "",
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
      }
   },
   "definitions":{  

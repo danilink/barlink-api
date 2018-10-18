@@ -10,6 +10,7 @@ const userCtrl = require('../controllers/userController')
 const expenseCtrl = require('../controllers/expenseController')
 const incomeCtrl = require('../controllers/incomeController')
 const foodCtrl = require('../controllers/foodController')
+const drinkCtrl = require('../controllers/drinkController')
 
 const config = require('../config')
 const api = asyncify(express.Router())
@@ -43,5 +44,9 @@ api.get('/incomes', isAuth, incomeCtrl.fetchAll)
 api.post('/food', jwt(config.auth), isAuth, foodCtrl.create)
 api.get('/food/:id', foodCtrl.detail)
 api.get('/food', foodCtrl.fetchAll)
+
+api.post('/drink', jwt(config.auth), isAuth, drinkCtrl.create)
+api.get('/drink/:id', drinkCtrl.detail)
+api.get('/drink', drinkCtrl.fetchAll)
 
 module.exports = api
